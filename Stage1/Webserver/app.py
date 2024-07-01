@@ -1,12 +1,5 @@
 """
-Provides a simple Flask API endpoint that returns a greeting message with the visitor's IP address, location, and the current temperature in that location.
-
-The `get_location_and_temperature` function is a mock implementation that returns hardcoded data. In a real-world application, this function would make calls to a geolocation and weather API to retrieve the actual location and temperature data.
-
-The `/api/hello` endpoint accepts an optional `visitor_name` query parameter, which is used in the greeting message. If no `visitor_name` is provided, the message will use the default "Visitor".
-"""
-"""
-Provides a simple Flask API endpoint that returns a greeting message with the client's IP address, location, and the current temperature in that location.
+This code provides a simple Flask API endpoint that returns a greeting message with the visitor's IP address, location, and the current temperature in that location.
 
 The `get_location_and_temperature` function is a mock implementation that returns hardcoded data. In a real-world application, this function would make calls to a geolocation and weather API to retrieve the actual location and temperature data.
 
