@@ -18,7 +18,6 @@ import requests
 app = Flask(__name__)
 
 def get_location_and_temperature(ip):
-    # Mock data for demonstration; replace with actual IP geolocation and weather API calls
     return {"city": "Nairobi", "temperature": 20}
 
 @app.route('/api/hello', methods=['GET'])
