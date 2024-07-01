@@ -17,7 +17,7 @@ This is a simple Flask API that returns a greeting message with the visitor's IP
 3. Navigate to the project directory: 
  ```cd HNG-INTERSHIP/Stage1/Webserver```
 4. Install the required dependencies:
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 ### Running the API
 
