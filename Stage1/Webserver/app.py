@@ -1,41 +1,56 @@
-"""
-Provides a simple Flask API endpoint that returns a greeting message with the visitor's IP address, location, and the current temperature in that location.
-
-The `get_location_and_temperature` function is a mock implementation that returns hardcoded data. In a real-world application, this function would make calls to a geolocation and weather API to retrieve the actual location and temperature data.
-
-The `/api/hello` endpoint accepts an optional `visitor_name` query parameter, which is used in the greeting message. If no `visitor_name` is provided, the message will use the default "Visitor".
-"""
-"""
-Provides a simple Flask API endpoint that returns a greeting message with the client's IP address, location, and the current temperature in that location.
-
-The `get_location_and_temperature` function is a mock implementation that returns hardcoded data. In a real-world application, this function would make calls to a geolocation and weather API to retrieve the actual location and temperature data.
-
-The `/api/hello` endpoint accepts an optional `visitor_name` query parameter, which is used in the greeting message. If no `visitor_name` is provided, the message will use the default "Visitor".
-"""
 from flask import Flask, request, jsonify
 import requests
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
-def get_location_and_temperature(ip):
-    # Mock data for demonstration; replace with actual IP geolocation and weather API calls
-    return {"city": "Nairobi", "temperature": 20}
+def get_location(ip):
+    try:
+        response = requests.get(f"http://ip-api.com/json/{ip}")
+        data = response.json()
+        city = data.get('city')
+        region = data.get('regionName')
+        country = data.get('country')
+        return city, region, country
+    except Exception as e:
+        print(f"Error fetching location: {e}")
+        return None, None, None
+
+def get_temperature(city):
+    try:
+        api_key = "OPENWEATHERMAP_API_KEY"
+        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={api_key}")
+        data = response.json()
+        return data['main']['temp']
+    except:
+        return None
 
 @app.route('/api/hello', methods=['GET'])
 def hello():
     visitor_name = request.args.get('visitor_name', 'Visitor')
-    client_ip = request.remote_addr
+    
+    client_ip = "8.8.8.8"  
 
-    # Get location and temperature for the IP
-    location_data = get_location_and_temperature(client_ip)
-    city = location_data["city"]
-    temperature = location_data["temperature"]
+    city, region, country = get_location(client_ip)
+    if city is None:
+        city = "Unknown"
+    
+    temperature = get_temperature(city)
+    if temperature is None:
+        temperature = "Unknown"
+
+    greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celcius in {city}"
 
     response = {
         "client_ip": client_ip,
         "location": city,
-        "greeting": f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celsius in {city}"
+        "greeting": greeting
     }
+
     return jsonify(response)
 
 if __name__ == '__main__':
