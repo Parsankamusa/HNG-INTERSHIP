@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 import requests
 from dotenv import load_dotenv
@@ -7,6 +8,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+
 
 def get_location(ip):
     try:
@@ -28,6 +30,9 @@ def get_temperature(city):
         return data['main']['temp']
     except:
         return None
+
+def get_location_and_temperature(ip):
+    return {"city": "Nairobi", "temperature": 20}
 
 @app.route('/api/hello', methods=['GET'])
 def hello():

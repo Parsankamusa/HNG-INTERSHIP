@@ -12,12 +12,12 @@ This is a simple Flask API that returns a greeting message with the visitor's IP
 ### Installation
 
 1. Clone the repository:
+   ```git clone https://github.com/Parsankamusa/HNG-INTERSHIP.git```
 
-
-2. Navigate to the project directory
- cd HNG-INTERSHIP/Stage1/Webserver
-3. Install the required dependencies:
-pip install -r requirements.txt
+3. Navigate to the project directory: 
+ ```cd HNG-INTERSHIP/Stage1/Webserver```
+4. Install the required dependencies:
+```pip install -r requirements.txt```
 
 ### Running the API
 
