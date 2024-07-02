@@ -33,7 +33,7 @@ def get_temperature(city):
 def hello():
     visitor_name = request.args.get('visitor_name', 'Visitor')
 
-    client_ip = "8.8.8.8"
+    client_ip = request.remote_addr
 
     city, region, country = get_location(client_ip)
     if city is None:
