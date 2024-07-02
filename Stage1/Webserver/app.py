@@ -8,7 +8,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
 def get_location(ip):
     try:
         response = requests.get(f"http://ip-api.com/json/{ip}")
@@ -30,19 +29,16 @@ def get_temperature(city):
     except:
         return None
 
-def get_location_and_temperature(ip):
-    return {"city": "Nairobi", "temperature": 20}
-
 @app.route('/api/hello', methods=['GET'])
 def hello():
     visitor_name = request.args.get('visitor_name', 'Visitor')
-    
-    client_ip = "8.8.8.8"  
+
+    client_ip = "8.8.8.8"
 
     city, region, country = get_location(client_ip)
     if city is None:
         city = "Unknown"
-    
+
     temperature = get_temperature(city)
     if temperature is None:
         temperature = "Unknown"
